@@ -12,15 +12,6 @@ export function drawPrize(): Prize {
   return prizes[prizes.length - 1];
 }
 
-/** Generate a random 6-character alphanumeric redemption code */
-export function generateRedemptionCode(): string {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // exclude confusing chars (0,O,1,I)
-  let code = "";
-  for (let i = 0; i < 6; i++) {
-    code += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return code;
-}
 
 /** Format phone for display: 0912-345-678 */
 export function formatPhone(phone: string): string {

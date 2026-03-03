@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SpinWheel from "@/components/SpinWheel";
 import PrizeModal from "@/components/PrizeModal";
-import { drawPrize, generateRedemptionCode } from "@/lib/utils";
+import { drawPrize } from "@/lib/utils";
 import { canSpin, recordSpin, markShared, needsShare } from "@/lib/storage";
 import { prizes } from "@/config/prizes";
 
@@ -20,7 +20,6 @@ function SpinContent() {
   const [currentPrize, setCurrentPrize] = useState<{
     name: string;
     emoji: string;
-    code: string;
   } | null>(null);
   const [showSharePrompt, setShowSharePrompt] = useState(mode === "share");
   const [hasShared, setHasShared] = useState(false);
@@ -45,9 +44,8 @@ function SpinContent() {
 
     const prize = drawPrize();
     const prizeIndex = prizes.findIndex((p) => p.id === prize.id);
-    const code = generateRedemptionCode();
 
-    setCurrentPrize({ name: prize.name, emoji: prize.emoji, code });
+    setCurrentPrize({ name: prize.name, emoji: prize.emoji });
     setTargetIndex(prizeIndex);
     setSpinning(true);
   }
@@ -58,7 +56,7 @@ function SpinContent() {
       if (!currentPrize) return;
 
       // Record this spin
-      recordSpin(phone, prizes[prizeIndex].name, currentPrize.code);
+      recordSpin(phone, prizes[prizeIndex].name);
 
       // Check if this was the first spin (show share option)
       if (needsShare(phone)) {
@@ -168,7 +166,6 @@ function SpinContent() {
         <PrizeModal
           prizeName={currentPrize.name}
           prizeEmoji={currentPrize.emoji}
-          code={currentPrize.code}
           showShare={needsShare(phone) || (!hasShared && canSpin(phone))}
           onShared={handleShared}
           onClose={handleCloseModal}

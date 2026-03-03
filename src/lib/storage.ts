@@ -2,7 +2,6 @@ export interface SpinState {
   count: number;
   shared: boolean;
   prizes: string[];
-  codes: string[];
 }
 
 function getKey(phone: string): string {
@@ -13,14 +12,14 @@ function getKey(phone: string): string {
 
 export function getSpinState(phone: string): SpinState {
   if (typeof window === "undefined") {
-    return { count: 0, shared: false, prizes: [], codes: [] };
+    return { count: 0, shared: false, prizes: [] };
   }
   const raw = localStorage.getItem(getKey(phone));
-  if (!raw) return { count: 0, shared: false, prizes: [], codes: [] };
+  if (!raw) return { count: 0, shared: false, prizes: [] };
   try {
     return JSON.parse(raw);
   } catch {
-    return { count: 0, shared: false, prizes: [], codes: [] };
+    return { count: 0, shared: false, prizes: [] };
   }
 }
 
@@ -39,11 +38,10 @@ export function needsShare(phone: string): boolean {
 }
 
 /** Record a spin result */
-export function recordSpin(phone: string, prizeName: string, code: string): void {
+export function recordSpin(phone: string, prizeName: string): void {
   const state = getSpinState(phone);
   state.count += 1;
   state.prizes.push(prizeName);
-  state.codes.push(code);
   localStorage.setItem(getKey(phone), JSON.stringify(state));
 }
 

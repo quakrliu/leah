@@ -5,7 +5,6 @@ import ShareButtons from "./ShareButtons";
 interface PrizeModalProps {
   prizeName: string;
   prizeEmoji: string;
-  code: string;
   showShare: boolean;
   onShared: () => void;
   onClose: () => void;
@@ -16,7 +15,6 @@ interface PrizeModalProps {
 export default function PrizeModal({
   prizeName,
   prizeEmoji,
-  code,
   showShare,
   onShared,
   onClose,
@@ -36,13 +34,9 @@ export default function PrizeModal({
           <p className="text-xl font-bold text-gray-800">{prizeName}</p>
         </div>
 
-        {/* Redemption code */}
+        {/* Instruction */}
         <div className="bg-leah-cream rounded-xl p-4 mb-4 text-center">
-          <p className="text-sm text-gray-500 mb-1">兌換碼</p>
-          <p className="text-3xl font-mono font-black tracking-widest text-leah-green-dark">
-            {code}
-          </p>
-          <p className="text-xs text-gray-400 mt-2">📸 截圖出示給店員即可兌換</p>
+          <p className="text-sm text-gray-600">📸 出示此畫面給店員即可兌換</p>
         </div>
 
         {/* Share section or spin again */}
