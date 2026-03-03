@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --leah-green: #4A7C59;
+  --leah-green-light: #78C850;
+  --leah-green-dark: #2D5A3D;
+  --leah-cream: #FDF6E3;
+  --leah-brown: #8B6914;
+}
+
+@theme inline {
+  --color-leah-green: var(--leah-green);
+  --color-leah-green-light: var(--leah-green-light);
+  --color-leah-green-dark: var(--leah-green-dark);
+  --color-leah-cream: var(--leah-cream);
+  --color-leah-brown: var(--leah-brown);
+}
+
+body {
+  background: var(--leah-cream);
+  color: #333;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  min-height: 100dvh;
+}
+
+/* Prevent pull-to-refresh on mobile */
+html {
+  overscroll-behavior: none;
+}
