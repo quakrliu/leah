@@ -10,6 +10,10 @@ interface PrizeModalProps {
   onClose: () => void;
   onSpinAgain: () => void;
   canSpinAgain: boolean;
+  addedLine: boolean;
+  sharedFB: boolean;
+  onAddedLine: () => void;
+  onSharedFB: () => void;
 }
 
 const CONFETTI_COLORS = [
@@ -83,6 +87,10 @@ export default function PrizeModal({
   onClose,
   onSpinAgain,
   canSpinAgain,
+  addedLine,
+  sharedFB,
+  onAddedLine,
+  onSharedFB,
 }: PrizeModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -121,7 +129,14 @@ export default function PrizeModal({
 
           {/* Share section or spin again */}
           {showShare && !canSpinAgain && (
-            <ShareButtons onShared={onShared} prizeName={prizeName} />
+            <ShareButtons
+              onShared={onShared}
+              prizeName={prizeName}
+              addedLine={addedLine}
+              sharedFB={sharedFB}
+              onAddedLine={onAddedLine}
+              onSharedFB={onSharedFB}
+            />
           )}
 
           {canSpinAgain && (
