@@ -93,13 +93,14 @@ export default function PrizeModal({
   onSharedFB,
 }: PrizeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
       <div
-        className="bg-white rounded-3xl w-full max-w-sm shadow-2xl
-                    animate-bounce-in relative overflow-hidden my-auto"
+        className="bg-white rounded-2xl w-full max-w-sm shadow-2xl
+                    animate-bounce-in relative overflow-hidden
+                    max-h-[calc(100dvh-1rem)] flex flex-col"
       >
         {/* Top gradient decoration bar */}
-        <div className="h-1.5 bg-gradient-to-r from-leah-green-light via-leah-green to-leah-green-dark" />
+        <div className="h-1 shrink-0 bg-gradient-to-r from-leah-green-light via-leah-green to-leah-green-dark" />
 
         {/* Confetti celebration */}
         <Confetti />
@@ -107,18 +108,18 @@ export default function PrizeModal({
         {/* Sparkle stars */}
         <SparkleStars />
 
-        <div className="p-5 relative">
+        <div className="p-4 relative overflow-y-auto flex-1">
           {/* Prize display */}
-          <div className="text-center mb-3">
-            <div className="text-5xl mb-2">{prizeEmoji}</div>
-            <h2 className="text-xl font-black text-leah-green-dark mb-0.5">恭喜中獎！</h2>
-            <p className="text-lg font-bold text-gray-800">{prizeName}</p>
+          <div className="text-center mb-2">
+            <div className="text-4xl mb-1">{prizeEmoji}</div>
+            <h2 className="text-lg font-black text-leah-green-dark">恭喜中獎！</h2>
+            <p className="text-base font-bold text-gray-800">{prizeName}</p>
           </div>
 
           {/* Instruction */}
-          <div className="glass-card p-3 mb-3 text-center">
-            <p className="text-sm text-gray-600 flex items-center justify-center gap-1.5">
-              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#4A7C59" strokeWidth="2" aria-hidden="true">
+          <div className="glass-card p-2 mb-2 text-center">
+            <p className="text-xs text-gray-600 flex items-center justify-center gap-1">
+              <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#4A7C59" strokeWidth="2" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="3" />
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="18" cy="7" r="1.5" fill="#4A7C59" stroke="none" />
@@ -142,14 +143,14 @@ export default function PrizeModal({
           {canSpinAgain && (
             <button
               onClick={onSpinAgain}
-              className="w-full py-3 px-6
+              className="w-full py-2.5 px-4
                          bg-gradient-to-r from-leah-green to-leah-green-dark
-                         text-white text-lg font-bold rounded-xl
+                         text-white text-base font-bold rounded-xl
                          hover:brightness-110 active:scale-95 transition-all
-                         shadow-lg shadow-leah-green/30 mb-3
+                         shadow-lg shadow-leah-green/30 mb-2
                          flex items-center justify-center gap-2"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <path d="M1 4v6h6" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -159,7 +160,7 @@ export default function PrizeModal({
 
           <button
             onClick={onClose}
-            className="w-full py-2 text-gray-400 text-sm hover:text-gray-600 transition-colors"
+            className="w-full py-1.5 text-gray-400 text-xs hover:text-gray-600 transition-colors"
           >
             關閉
           </button>
