@@ -42,21 +42,33 @@ export default function PhoneInput({ onSubmit, disabled, message }: PhoneInputPr
         onChange={handleChange}
         maxLength={13}
         disabled={disabled}
-        className="w-full px-4 py-3 text-xl text-center rounded-xl border-2 border-leah-green/30
-                   focus:border-leah-green focus:outline-none bg-white
-                   disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-3 text-xl text-center rounded-xl
+                   border-2 border-leah-green/30
+                   bg-white/50 backdrop-blur-sm
+                   focus:border-leah-green focus:outline-none
+                   focus:ring-4 focus:ring-leah-green/15
+                   disabled:opacity-50 disabled:cursor-not-allowed
+                   transition-all duration-200"
       />
       {error && <p className="mt-2 text-red-500 text-sm text-center">{error}</p>}
       {message && <p className="mt-3 text-amber-600 text-sm text-center font-medium">{message}</p>}
       <button
         type="submit"
         disabled={disabled}
-        className="mt-4 w-full py-3 px-6 bg-leah-green text-white text-xl font-bold rounded-xl
-                   hover:bg-leah-green-dark active:scale-95 transition-all
+        className="mt-4 w-full py-3 px-6
+                   bg-gradient-to-r from-leah-green to-leah-green-dark
+                   text-white text-xl font-bold rounded-xl
+                   hover:brightness-110 active:scale-95 transition-all
                    disabled:opacity-50 disabled:cursor-not-allowed
-                   shadow-lg shadow-leah-green/30"
+                   shadow-lg shadow-leah-green/30
+                   flex items-center justify-center gap-2"
       >
-        🎯 開始抽獎
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+          <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" fill="none" />
+          <circle cx="12" cy="12" r="2.5" fill="currentColor" />
+        </svg>
+        開始抽獎
       </button>
     </form>
   );

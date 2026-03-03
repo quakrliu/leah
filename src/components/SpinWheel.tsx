@@ -149,22 +149,14 @@ export default function SpinWheel({ onSpinEnd, targetPrizeIndex, spinning }: Spi
     const targetIdx = targetPrizeIndex;
     animatingRef.current = true;
 
-    // Calculate target rotation:
-    // Pointer is at top (angle = -PI/2 or 3PI/2)
-    // We need the target segment's center to align with the top
-    // Segment i center is at: i * SEGMENT_ANGLE + SEGMENT_ANGLE/2
-    // We want: rotation + targetIndex * SEGMENT_ANGLE + SEGMENT_ANGLE/2 = -PI/2 (mod 2PI)
-    // rotation = -PI/2 - targetIndex * SEGMENT_ANGLE - SEGMENT_ANGLE/2
-
     const targetAngle =
       -Math.PI / 2 - targetIdx * SEGMENT_ANGLE - SEGMENT_ANGLE / 2;
 
-    // Add extra full rotations for visual effect (5-8 full spins)
     const extraSpins = (5 + Math.random() * 3) * 2 * Math.PI;
     const totalRotation = targetAngle - rotationRef.current - extraSpins;
 
     const startRotation = rotationRef.current;
-    const duration = 4000 + Math.random() * 1500; // 4-5.5 seconds
+    const duration = 4000 + Math.random() * 1500;
     const startTime = performance.now();
 
     function easeOutCubic(t: number): number {
@@ -190,11 +182,49 @@ export default function SpinWheel({ onSpinEnd, targetPrizeIndex, spinning }: Spi
     requestAnimationFrame(animate);
   }, [spinning, targetPrizeIndex, drawWheel, onSpinEnd]);
 
+  const ringSize = canvasSize + 24;
+
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center animate-scale-in">
+      {/* Glow background */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: canvasSize + 40,
+          height: canvasSize + 40,
+          background: "radial-gradient(circle, rgba(74,124,89,0.15) 0%, transparent 70%)",
+          filter: "blur(20px)",
+        }}
+      />
+      {/* Decorative outer ring */}
+      <svg
+        className="absolute animate-spin-slow pointer-events-none"
+        width={ringSize}
+        height={ringSize}
+        viewBox={`0 0 ${ringSize} ${ringSize}`}
+        aria-hidden="true"
+      >
+        <circle
+          cx={ringSize / 2}
+          cy={ringSize / 2}
+          r={ringSize / 2 - 4}
+          fill="none"
+          stroke="url(#ringGrad)"
+          strokeWidth="3"
+          strokeDasharray="8 12"
+          opacity="0.4"
+        />
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#78C850" />
+            <stop offset="50%" stopColor="#4A7C59" />
+            <stop offset="100%" stopColor="#2D5A3D" />
+          </linearGradient>
+        </defs>
+      </svg>
       <canvas
         ref={canvasRef}
-        className="drop-shadow-xl"
+        className="drop-shadow-xl relative"
         style={{ width: canvasSize, height: canvasSize }}
       />
     </div>
