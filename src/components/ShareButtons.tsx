@@ -22,7 +22,7 @@ export default function ShareButtons({
   const [addedLine, setAddedLine] = useState(initAddedLine);
   const [sharedFB, setSharedFB] = useState(initSharedFB);
 
-  const shareText = `我在 LEAH 力芽餐廳抽到「${prizeName}」🎉 快來試試你的手氣！\nhttps://maps.app.goo.gl/ng2i99wDthLZ23WU7`;
+  const shareText = `我在 LEAH 力芽餐廳抽到「${prizeName}」🎉 快來試試你的手氣！`;
 
   function handleAddLine() {
     window.open("https://line.me/R/ti/p/@leah", "_blank");
@@ -48,7 +48,8 @@ export default function ShareButtons({
     }
     setShowCopiedHint(true);
     setTimeout(() => {
-      const url = "https://m.facebook.com/";
+      const mapUrl = "https://maps.app.goo.gl/ng2i99wDthLZ23WU7";
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(mapUrl)}&quote=${encodeURIComponent(shareText)}`;
       window.open(url, "_blank");
       setSharedFB(true);
       onSharedFB();
