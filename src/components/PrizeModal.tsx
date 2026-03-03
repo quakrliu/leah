@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import ShareButtons from "./ShareButtons";
 
 interface PrizeModalProps {
@@ -25,7 +26,7 @@ const CONFETTI_COLORS = [
 
 function Confetti() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-3xl">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl">
       {CONFETTI_COLORS.map((color, i) => (
         <div
           key={i}
@@ -46,39 +47,6 @@ function Confetti() {
   );
 }
 
-function SparkleStars() {
-  const positions = [
-    { top: "8%", left: "10%", delay: "0s", size: 16 },
-    { top: "12%", right: "12%", delay: "0.5s", size: 14 },
-    { top: "25%", left: "5%", delay: "1s", size: 10 },
-    { top: "20%", right: "8%", delay: "1.5s", size: 12 },
-  ];
-
-  return (
-    <>
-      {positions.map((pos, i) => (
-        <svg
-          key={i}
-          className="absolute animate-sparkle pointer-events-none"
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-            animationDelay: pos.delay,
-            width: pos.size,
-            height: pos.size,
-          }}
-          viewBox="0 0 24 24"
-          fill="#F1C40F"
-          aria-hidden="true"
-        >
-          <path d="M12 0l3.09 8.26L24 9.27l-6.91 5.52L19.18 24 12 18.9 4.82 24l2.09-9.21L0 9.27l8.91-1.01z" />
-        </svg>
-      ))}
-    </>
-  );
-}
-
 export default function PrizeModal({
   prizeName,
   prizeEmoji,
@@ -92,12 +60,28 @@ export default function PrizeModal({
   onAddedLine,
   onSharedFB,
 }: PrizeModalProps) {
+  const [vh, setVh] = useState<number | null>(null);
+
+  useEffect(() => {
+    function update() {
+      setVh(window.innerHeight);
+    }
+    update();
+    window.addEventListener("resize", update);
+    // Also update when page becomes visible again (returning from LINE/FB)
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm">
-      <div className="min-h-full flex items-center justify-center p-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm overflow-hidden">
       <div
         className="bg-white rounded-2xl w-full max-w-sm shadow-2xl
                     animate-bounce-in relative overflow-hidden"
+        style={vh ? { maxHeight: vh - 16 } : undefined}
       >
         {/* Top gradient decoration bar */}
         <div className="h-1 shrink-0 bg-gradient-to-r from-leah-green-light via-leah-green to-leah-green-dark" />
@@ -105,21 +89,18 @@ export default function PrizeModal({
         {/* Confetti celebration */}
         <Confetti />
 
-        {/* Sparkle stars */}
-        <SparkleStars />
-
-        <div className="p-4 relative">
+        <div className="px-4 pt-3 pb-3 relative">
           {/* Prize display */}
-          <div className="text-center mb-2">
-            <div className="text-4xl mb-1">{prizeEmoji}</div>
-            <h2 className="text-lg font-black text-leah-green-dark">恭喜中獎！</h2>
-            <p className="text-base font-bold text-gray-800">{prizeName}</p>
+          <div className="text-center mb-1.5">
+            <div className="text-3xl">{prizeEmoji}</div>
+            <h2 className="text-base font-black text-leah-green-dark">恭喜中獎！</h2>
+            <p className="text-sm font-bold text-gray-800">{prizeName}</p>
           </div>
 
           {/* Instruction */}
-          <div className="glass-card p-2 mb-2 text-center">
+          <div className="glass-card px-2 py-1.5 mb-2 text-center">
             <p className="text-xs text-gray-600 flex items-center justify-center gap-1">
-              <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#4A7C59" strokeWidth="2" aria-hidden="true">
+              <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#4A7C59" strokeWidth="2" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="3" />
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="18" cy="7" r="1.5" fill="#4A7C59" stroke="none" />
@@ -143,11 +124,11 @@ export default function PrizeModal({
           {canSpinAgain && (
             <button
               onClick={onSpinAgain}
-              className="w-full py-2.5 px-4
+              className="w-full py-2 px-4
                          bg-gradient-to-r from-leah-green to-leah-green-dark
-                         text-white text-base font-bold rounded-xl
+                         text-white text-sm font-bold rounded-xl
                          hover:brightness-110 active:scale-95 transition-all
-                         shadow-lg shadow-leah-green/30 mb-2
+                         shadow-lg shadow-leah-green/30 mb-1.5
                          flex items-center justify-center gap-2"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
@@ -160,12 +141,11 @@ export default function PrizeModal({
 
           <button
             onClick={onClose}
-            className="w-full py-1.5 text-gray-400 text-xs hover:text-gray-600 transition-colors"
+            className="w-full py-1 text-gray-400 text-xs hover:text-gray-600 transition-colors"
           >
             關閉
           </button>
         </div>
-      </div>
       </div>
     </div>
   );
