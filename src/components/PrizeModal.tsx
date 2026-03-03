@@ -93,11 +93,11 @@ export default function PrizeModal({
   onSharedFB,
 }: PrizeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm">
+      <div className="min-h-full flex items-center justify-center p-2">
       <div
         className="bg-white rounded-2xl w-full max-w-sm shadow-2xl
-                    animate-bounce-in relative overflow-hidden
-                    max-h-[calc(100dvh-1rem)] flex flex-col"
+                    animate-bounce-in relative overflow-hidden"
       >
         {/* Top gradient decoration bar */}
         <div className="h-1 shrink-0 bg-gradient-to-r from-leah-green-light via-leah-green to-leah-green-dark" />
@@ -108,7 +108,7 @@ export default function PrizeModal({
         {/* Sparkle stars */}
         <SparkleStars />
 
-        <div className="p-4 relative overflow-y-auto flex-1">
+        <div className="p-4 relative">
           {/* Prize display */}
           <div className="text-center mb-2">
             <div className="text-4xl mb-1">{prizeEmoji}</div>
@@ -165,6 +165,7 @@ export default function PrizeModal({
             關閉
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
