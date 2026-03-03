@@ -93,10 +93,10 @@ export default function PrizeModal({
   onSharedFB,
 }: PrizeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm overflow-y-auto">
       <div
         className="bg-white rounded-3xl w-full max-w-sm shadow-2xl
-                    animate-bounce-in relative overflow-hidden"
+                    animate-bounce-in relative overflow-hidden my-auto"
       >
         {/* Top gradient decoration bar */}
         <div className="h-1.5 bg-gradient-to-r from-leah-green-light via-leah-green to-leah-green-dark" />
@@ -107,16 +107,16 @@ export default function PrizeModal({
         {/* Sparkle stars */}
         <SparkleStars />
 
-        <div className="p-6 relative">
+        <div className="p-5 relative">
           {/* Prize display */}
-          <div className="text-center mb-4">
-            <div className="text-6xl mb-3">{prizeEmoji}</div>
-            <h2 className="text-2xl font-black text-leah-green-dark mb-1">恭喜中獎！</h2>
-            <p className="text-xl font-bold text-gray-800">{prizeName}</p>
+          <div className="text-center mb-3">
+            <div className="text-5xl mb-2">{prizeEmoji}</div>
+            <h2 className="text-xl font-black text-leah-green-dark mb-0.5">恭喜中獎！</h2>
+            <p className="text-lg font-bold text-gray-800">{prizeName}</p>
           </div>
 
           {/* Instruction */}
-          <div className="glass-card p-4 mb-4 text-center">
+          <div className="glass-card p-3 mb-3 text-center">
             <p className="text-sm text-gray-600 flex items-center justify-center gap-1.5">
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#4A7C59" strokeWidth="2" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="3" />
