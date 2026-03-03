@@ -32,12 +32,29 @@ export default function ShareButtons({
     if (sharedFB) onShared();
   }
 
-  function handleShareFB() {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-    window.open(url, "_blank");
-    setSharedFB(true);
-    onSharedFB();
-    if (addedLine) onShared();
+  const [showCopiedHint, setShowCopiedHint] = useState(false);
+
+  async function handleShareFB() {
+    // Copy share text to clipboard first, then open FB
+    try {
+      await navigator.clipboard.writeText(shareText);
+    } catch {
+      // Fallback for older browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = shareText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setShowCopiedHint(true);
+    setTimeout(() => {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+      window.open(url, "_blank");
+      setSharedFB(true);
+      onSharedFB();
+      if (addedLine) onShared();
+    }, 1500);
   }
 
   return (
@@ -94,6 +111,11 @@ export default function ShareButtons({
           </svg>
           {sharedFB ? "已分享 \u2713" : "分享到 FB"}
         </button>
+        {showCopiedHint && !sharedFB && (
+          <p className="text-xs text-blue-600 text-center mt-1.5 animate-pulse font-medium">
+            已複製文案到剪貼簿，貼上即可發布！
+          </p>
+        )}
       </div>
     </div>
   );
